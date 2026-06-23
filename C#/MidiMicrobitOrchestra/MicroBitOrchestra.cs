@@ -53,7 +53,14 @@ namespace MidiMicrobitOrchestra
         private void btnMidiTest_Click(object sender, EventArgs e)
         {
             int noteNumber = int.Parse(txtNoteNumber.Text);
-            midiOut.Send(new NAudio.Midi.NoteOnEvent(0, 1, noteNumber, 127, 500).GetAsShortMessage());
+            if (midiOut != null)
+            {
+                midiOut.Send(new NAudio.Midi.NoteOnEvent(0, 1, noteNumber, 127, 500).GetAsShortMessage());
+            }
+            else
+            {
+                lstLog.Items.Add("Not connected to a MIDI device");
+            }
         }
 
         /// <summary>
@@ -126,7 +133,7 @@ namespace MidiMicrobitOrchestra
             {
                 // read the data from the REPL
                 string data = port.ReadLine();
-                
+
                 // this event handler will run in a different thread from the main program thread so Invoke is required before interacting with the UI
                 lstLog.Invoke(() =>
                 {
@@ -154,9 +161,9 @@ namespace MidiMicrobitOrchestra
                         midiOut.Send(new NoteOnEvent(0, 1, note, 127, 200).GetAsShortMessage());
                     }
                 }
-            } 
+            }
             /// ... so be prepared for errors and log them gracefully
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 lstLog.Invoke(() =>
                 {
@@ -175,6 +182,37 @@ namespace MidiMicrobitOrchestra
         {
             int noteNumber = int.Parse(txtNoteNumber.Text);
             midiOut.Send(new NAudio.Midi.NoteOnEvent(0, 1, noteNumber, 0, 500).GetAsShortMessage());
+        }
+
+        /// <summary>
+        /// Menu item event handler: clear the log list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            lstLog.Items.Clear();
+        }
+
+        /// <summary>
+        /// Menu item event handler: export the log list to a text file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            dlg.Title = "Export log to text file";
+            if(dlg.ShowDialog() == DialogResult.OK)
+            {
+                using (StreamWriter sw = new StreamWriter(dlg.FileName))
+                {
+                    foreach (var item in lstLog.Items)
+                    {
+                        sw.WriteLine(item.ToString());
+                    }
+                }
         }
     }
 }
