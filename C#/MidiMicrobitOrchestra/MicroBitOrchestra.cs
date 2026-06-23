@@ -8,6 +8,7 @@ namespace MidiMicrobitOrchestra
     {
 
         NAudio.Midi.MidiOut midiOut;
+        MessageFilter firewall = new MessageFilter();
         public MicroBitOrchestra()
         {
             InitializeComponent();
@@ -204,7 +205,7 @@ namespace MidiMicrobitOrchestra
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
             dlg.Title = "Export log to text file";
-            if(dlg.ShowDialog() == DialogResult.OK)
+            if (dlg.ShowDialog() == DialogResult.OK)
             {
                 using (StreamWriter sw = new StreamWriter(dlg.FileName))
                 {
@@ -213,6 +214,110 @@ namespace MidiMicrobitOrchestra
                         sw.WriteLine(item.ToString());
                     }
                 }
+            }
+        }
+        /// <summary>
+        /// Menu item event handler: load rules from a text file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void loadRulesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            dlg.Title = "Load rules from text file";
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                txtRuleEditor.Text = File.ReadAllText(dlg.FileName);
+            }
+        }
+
+        /// <summary>
+        /// Menu item event handler: save rules to a text file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void saveRulesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            dlg.Title = "Save rules to text file";
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                File.WriteAllText(dlg.FileName, txtRuleEditor.Text);
+            }
+        }
+
+        /// <summary>
+        /// Update the rules in the firewall based on the text in the rule editor
+        /// </summary>
+        void UpdateRules()
+        {
+            firewall.rules.Clear();
+            string rules = txtRuleEditor.Text;
+
+            foreach (string line in rules.Split("\n"))
+            {
+                MessageRule r = new MessageRule(line);
+                if (r.ruleType != RuleType.Invalid)
+                {
+                    firewall.rules.Add(r);
+                }
+            }
+
+            lstRules.Items.Clear();
+            foreach (MessageRule r in firewall.rules)
+            {
+                lstRules.Items.Add(r.ToString());
+            }
+
+            string test = txtTestMessage.Text;
+            
+            lblRules.Text = $"{firewall.rules.Count} rules loaded: Test '{test}'" + 
+                (firewall.IsAllowed(test)? "allowed":"blocked");
+        }
+
+        /// <summary>
+        /// Text changed event handler: update the rules after a short delay to avoid updating on every keystroke
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtRuleEditor_TextChanged(object sender, EventArgs e)
+        {
+            lblRules.Text = "Waiting...";
+            ruleUpdateTimer.Enabled = false;
+            ruleUpdateTimer.Enabled = true;
+            ruleUpdateTimer.Start();
+        }
+
+        /// <summary>
+        /// Timer event handler: update the rules after a short delay to avoid updating on every keystroke
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ruleUpdateTimer_Tick(object sender, EventArgs e)
+        {
+            ruleUpdateTimer.Stop();
+            lblRules.Text = "Checking...";
+            UpdateRules();
+        }
+
+        /// <summary>
+        /// Button click event handler: test the message filter with the text in the test message box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            if (firewall.IsAllowed(txtTestMessage.Text))
+            {
+                lstLog.Items.Add($"Message '{txtTestMessage.Text}' is allowed");
+
+            }
+            else
+            {
+                lstLog.Items.Add($"Message '{txtTestMessage.Text}' is blocked");
+            }
         }
     }
 }

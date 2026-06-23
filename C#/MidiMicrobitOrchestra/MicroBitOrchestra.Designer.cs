@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             menu = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
+            loadRulesToolStripMenuItem = new ToolStripMenuItem();
+            saveRulesToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
             logToolStripMenuItem = new ToolStripMenuItem();
             clearToolStripMenuItem = new ToolStripMenuItem();
@@ -52,8 +55,23 @@
             btnSerialDisconnect = new Button();
             lstSerialPorts = new ListBox();
             tabLog = new TabPage();
+            splitContainer2 = new SplitContainer();
             groupBox1 = new GroupBox();
             lstLog = new ListBox();
+            groupBox2 = new GroupBox();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            label1 = new Label();
+            txtTestMessage = new TextBox();
+            btnTest = new Button();
+            tabFilter = new TabPage();
+            splitContainer1 = new SplitContainer();
+            txtRuleEditor = new TextBox();
+            lstRules = new ListBox();
+            statusStrip1 = new StatusStrip();
+            lblRules = new ToolStripStatusLabel();
+            ruleUpdateTimer = new System.Windows.Forms.Timer(components);
+            groupBox3 = new GroupBox();
+            groupBox4 = new GroupBox();
             menu.SuspendLayout();
             tabControls.SuspendLayout();
             tabMidiOutputDevices.SuspendLayout();
@@ -63,7 +81,21 @@
             grpSerialPorts.SuspendLayout();
             flowSerialButtons.SuspendLayout();
             tabLog.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer2).BeginInit();
+            splitContainer2.Panel1.SuspendLayout();
+            splitContainer2.Panel2.SuspendLayout();
+            splitContainer2.SuspendLayout();
             groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
+            tabFilter.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
+            splitContainer1.Panel1.SuspendLayout();
+            splitContainer1.Panel2.SuspendLayout();
+            splitContainer1.SuspendLayout();
+            statusStrip1.SuspendLayout();
+            groupBox3.SuspendLayout();
+            groupBox4.SuspendLayout();
             SuspendLayout();
             // 
             // menu
@@ -77,15 +109,29 @@
             // 
             // fileToolStripMenuItem
             // 
-            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { exitToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { loadRulesToolStripMenuItem, saveRulesToolStripMenuItem, exitToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new Size(37, 20);
             fileToolStripMenuItem.Text = "&File";
             // 
+            // loadRulesToolStripMenuItem
+            // 
+            loadRulesToolStripMenuItem.Name = "loadRulesToolStripMenuItem";
+            loadRulesToolStripMenuItem.Size = new Size(128, 22);
+            loadRulesToolStripMenuItem.Text = "&Load rules";
+            loadRulesToolStripMenuItem.Click += loadRulesToolStripMenuItem_Click;
+            // 
+            // saveRulesToolStripMenuItem
+            // 
+            saveRulesToolStripMenuItem.Name = "saveRulesToolStripMenuItem";
+            saveRulesToolStripMenuItem.Size = new Size(128, 22);
+            saveRulesToolStripMenuItem.Text = "&Save rules";
+            saveRulesToolStripMenuItem.Click += saveRulesToolStripMenuItem_Click;
+            // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(92, 22);
+            exitToolStripMenuItem.Size = new Size(128, 22);
             exitToolStripMenuItem.Text = "E&xit";
             // 
             // logToolStripMenuItem
@@ -98,14 +144,14 @@
             // clearToolStripMenuItem
             // 
             clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            clearToolStripMenuItem.Size = new Size(180, 22);
+            clearToolStripMenuItem.Size = new Size(107, 22);
             clearToolStripMenuItem.Text = "&Clear";
             clearToolStripMenuItem.Click += clearToolStripMenuItem_Click;
             // 
             // exportToolStripMenuItem
             // 
             exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            exportToolStripMenuItem.Size = new Size(180, 22);
+            exportToolStripMenuItem.Size = new Size(107, 22);
             exportToolStripMenuItem.Text = "&Export";
             exportToolStripMenuItem.Click += exportToolStripMenuItem_Click;
             // 
@@ -114,6 +160,7 @@
             tabControls.Controls.Add(tabMidiOutputDevices);
             tabControls.Controls.Add(tabSerialPort);
             tabControls.Controls.Add(tabLog);
+            tabControls.Controls.Add(tabFilter);
             tabControls.Dock = DockStyle.Fill;
             tabControls.Location = new Point(0, 24);
             tabControls.Name = "tabControls";
@@ -290,7 +337,7 @@
             // 
             // tabLog
             // 
-            tabLog.Controls.Add(groupBox1);
+            tabLog.Controls.Add(splitContainer2);
             tabLog.Location = new Point(4, 24);
             tabLog.Name = "tabLog";
             tabLog.Padding = new Padding(3);
@@ -299,13 +346,31 @@
             tabLog.Text = "Messages";
             tabLog.UseVisualStyleBackColor = true;
             // 
+            // splitContainer2
+            // 
+            splitContainer2.Dock = DockStyle.Fill;
+            splitContainer2.Location = new Point(3, 3);
+            splitContainer2.Name = "splitContainer2";
+            splitContainer2.Orientation = Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            splitContainer2.Panel1.Controls.Add(groupBox1);
+            // 
+            // splitContainer2.Panel2
+            // 
+            splitContainer2.Panel2.Controls.Add(groupBox2);
+            splitContainer2.Size = new Size(786, 583);
+            splitContainer2.SplitterDistance = 290;
+            splitContainer2.TabIndex = 1;
+            // 
             // groupBox1
             // 
             groupBox1.Controls.Add(lstLog);
             groupBox1.Dock = DockStyle.Fill;
-            groupBox1.Location = new Point(3, 3);
+            groupBox1.Location = new Point(0, 0);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(786, 583);
+            groupBox1.Size = new Size(786, 290);
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
             groupBox1.Text = "Log:";
@@ -317,8 +382,147 @@
             lstLog.ItemHeight = 15;
             lstLog.Location = new Point(3, 19);
             lstLog.Name = "lstLog";
-            lstLog.Size = new Size(780, 561);
-            lstLog.TabIndex = 0;
+            lstLog.Size = new Size(780, 268);
+            lstLog.TabIndex = 1;
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(flowLayoutPanel1);
+            groupBox2.Dock = DockStyle.Fill;
+            groupBox2.Location = new Point(0, 0);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(786, 289);
+            groupBox2.TabIndex = 0;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Test:";
+            // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Controls.Add(label1);
+            flowLayoutPanel1.Controls.Add(txtTestMessage);
+            flowLayoutPanel1.Controls.Add(btnTest);
+            flowLayoutPanel1.Dock = DockStyle.Fill;
+            flowLayoutPanel1.Location = new Point(3, 19);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(780, 267);
+            flowLayoutPanel1.TabIndex = 2;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(3, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(56, 15);
+            label1.TabIndex = 0;
+            label1.Text = "Message:";
+            // 
+            // txtTestMessage
+            // 
+            txtTestMessage.Location = new Point(65, 3);
+            txtTestMessage.Name = "txtTestMessage";
+            txtTestMessage.Size = new Size(456, 23);
+            txtTestMessage.TabIndex = 0;
+            // 
+            // btnTest
+            // 
+            btnTest.Location = new Point(527, 3);
+            btnTest.Name = "btnTest";
+            btnTest.Size = new Size(75, 23);
+            btnTest.TabIndex = 1;
+            btnTest.Text = "&Test";
+            btnTest.UseVisualStyleBackColor = true;
+            btnTest.Click += btnTest_Click;
+            // 
+            // tabFilter
+            // 
+            tabFilter.Controls.Add(splitContainer1);
+            tabFilter.Controls.Add(statusStrip1);
+            tabFilter.Location = new Point(4, 24);
+            tabFilter.Name = "tabFilter";
+            tabFilter.Padding = new Padding(3);
+            tabFilter.Size = new Size(792, 589);
+            tabFilter.TabIndex = 3;
+            tabFilter.Text = "Rules";
+            tabFilter.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer1
+            // 
+            splitContainer1.Dock = DockStyle.Fill;
+            splitContainer1.Location = new Point(3, 3);
+            splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            splitContainer1.Panel1.Controls.Add(groupBox3);
+            // 
+            // splitContainer1.Panel2
+            // 
+            splitContainer1.Panel2.Controls.Add(groupBox4);
+            splitContainer1.Size = new Size(786, 561);
+            splitContainer1.SplitterDistance = 484;
+            splitContainer1.TabIndex = 1;
+            // 
+            // txtRuleEditor
+            // 
+            txtRuleEditor.Dock = DockStyle.Fill;
+            txtRuleEditor.Location = new Point(3, 19);
+            txtRuleEditor.Multiline = true;
+            txtRuleEditor.Name = "txtRuleEditor";
+            txtRuleEditor.Size = new Size(478, 539);
+            txtRuleEditor.TabIndex = 0;
+            txtRuleEditor.TextChanged += txtRuleEditor_TextChanged;
+            // 
+            // lstRules
+            // 
+            lstRules.Dock = DockStyle.Fill;
+            lstRules.FormattingEnabled = true;
+            lstRules.ItemHeight = 15;
+            lstRules.Location = new Point(3, 19);
+            lstRules.Name = "lstRules";
+            lstRules.Size = new Size(292, 539);
+            lstRules.TabIndex = 0;
+            // 
+            // statusStrip1
+            // 
+            statusStrip1.Items.AddRange(new ToolStripItem[] { lblRules });
+            statusStrip1.Location = new Point(3, 564);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(786, 22);
+            statusStrip1.TabIndex = 0;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // lblRules
+            // 
+            lblRules.Name = "lblRules";
+            lblRules.Size = new Size(105, 17);
+            lblRules.Text = "No errors detected";
+            // 
+            // ruleUpdateTimer
+            // 
+            ruleUpdateTimer.Interval = 1000;
+            ruleUpdateTimer.Tick += ruleUpdateTimer_Tick;
+            // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(txtRuleEditor);
+            groupBox3.Dock = DockStyle.Fill;
+            groupBox3.Location = new Point(0, 0);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(484, 561);
+            groupBox3.TabIndex = 1;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Rule Editor";
+            // 
+            // groupBox4
+            // 
+            groupBox4.Controls.Add(lstRules);
+            groupBox4.Dock = DockStyle.Fill;
+            groupBox4.Location = new Point(0, 0);
+            groupBox4.Name = "groupBox4";
+            groupBox4.Size = new Size(298, 561);
+            groupBox4.TabIndex = 1;
+            groupBox4.TabStop = false;
+            groupBox4.Text = "Valid rules:";
             // 
             // MicroBitOrchestra
             // 
@@ -342,7 +546,25 @@
             grpSerialPorts.ResumeLayout(false);
             flowSerialButtons.ResumeLayout(false);
             tabLog.ResumeLayout(false);
+            splitContainer2.Panel1.ResumeLayout(false);
+            splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer2).EndInit();
+            splitContainer2.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
+            groupBox2.ResumeLayout(false);
+            flowLayoutPanel1.ResumeLayout(false);
+            flowLayoutPanel1.PerformLayout();
+            tabFilter.ResumeLayout(false);
+            tabFilter.PerformLayout();
+            splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
+            splitContainer1.ResumeLayout(false);
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
+            groupBox4.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -370,9 +592,26 @@
         private ToolStripMenuItem exitToolStripMenuItem;
         private TabPage tabLog;
         private GroupBox groupBox1;
-        private ListBox lstLog;
         private ToolStripMenuItem logToolStripMenuItem;
         private ToolStripMenuItem clearToolStripMenuItem;
         private ToolStripMenuItem exportToolStripMenuItem;
+        private TabPage tabFilter;
+        private StatusStrip statusStrip1;
+        private ToolStripMenuItem loadRulesToolStripMenuItem;
+        private ToolStripMenuItem saveRulesToolStripMenuItem;
+        private SplitContainer splitContainer1;
+        private TextBox txtRuleEditor;
+        private ListBox lstRules;
+        private ToolStripStatusLabel lblRules;
+        private System.Windows.Forms.Timer ruleUpdateTimer;
+        private SplitContainer splitContainer2;
+        private ListBox lstLog;
+        private GroupBox groupBox2;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private Label label1;
+        private TextBox txtTestMessage;
+        private Button btnTest;
+        private GroupBox groupBox3;
+        private GroupBox groupBox4;
     }
 }
