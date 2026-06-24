@@ -98,6 +98,8 @@ namespace MidiMicrobitOrchestra
             UpdateSerialPortNames();
             UpdateMidiOutDevices();
             comboChannel.SelectedIndex = 0;
+            SetTextSize(16);
+            WindowState = FormWindowState.Maximized;
         }
 
         SerialPort port;
@@ -128,7 +130,7 @@ namespace MidiMicrobitOrchestra
             {
                 Invoke(() =>
                 {
-                    lblRules.Text = $"Message '{msg}' is blocked by firewall";
+                    lblRules.Text = $"Message '{msg.Trim()}' is blocked by firewall";
                 });
                 return;
             }
@@ -147,17 +149,42 @@ namespace MidiMicrobitOrchestra
             {
                 // extract the MIDI note number from the received data
                 int note = int.Parse(m.Groups[1].Value);
+                int channel = 1;
 
                 lstLog.Invoke(() =>
                 {
                     lstLog.Items.Add($"Note On: {note}");
+
+                    switch (comboChannel.SelectedIndex)
+                    {
+                        // channel 0 = normal channel 1 (MIDI channels are 0-15 but displayed as 1-16 in most software)
+                        case 0:
+                            channel = 1;
+                            break;
+                        // channel 10 = percussion
+                        case 1:
+                            channel = 10;
+                            break;
+                        // channel as second integer in the message
+                        case 2:
+                            m = Regex.Match(msg, ("\\d+\\s+(\\d+)"));
+                            if (m.Success)
+                            {
+                                channel = int.Parse(m.Groups[1].Value);
+                                if (channel < 1)
+                                    channel = 1;
+                                if (channel > 16)
+                                    channel = 16;
+                            }
+                            break;
+                    }
                 });
 
                 // if we're connected to a MIDI output device then trigger a NoteOn message
                 if (midiOut != null)
                 {
                     // See https://mayerwin.github.io/MIDI-Notes-Player/ for an interactive description of MIDI note numbers
-                    midiOut.Send(new NoteOnEvent(0, 1, note, 127, 200).GetAsShortMessage());
+                    midiOut.Send(new NoteOnEvent(0, channel, note, 127, 200).GetAsShortMessage());
                 }
             }
         }

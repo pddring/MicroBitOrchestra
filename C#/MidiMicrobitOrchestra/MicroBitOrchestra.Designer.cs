@@ -176,7 +176,7 @@
             tabControls.Location = new Point(0, 24);
             tabControls.Name = "tabControls";
             tabControls.SelectedIndex = 0;
-            tabControls.Size = new Size(800, 617);
+            tabControls.Size = new Size(800, 688);
             tabControls.TabIndex = 4;
             // 
             // tabMidiOutputDevices
@@ -211,16 +211,16 @@
             flowMidiOutputButtons.Controls.Add(btnStop);
             flowMidiOutputButtons.Controls.Add(comboChannel);
             flowMidiOutputButtons.Dock = DockStyle.Bottom;
-            flowMidiOutputButtons.Location = new Point(3, 549);
+            flowMidiOutputButtons.Location = new Point(3, 522);
             flowMidiOutputButtons.Name = "flowMidiOutputButtons";
-            flowMidiOutputButtons.Size = new Size(780, 31);
+            flowMidiOutputButtons.Size = new Size(780, 58);
             flowMidiOutputButtons.TabIndex = 1;
             // 
             // btnMidiOutConnect
             // 
             btnMidiOutConnect.Location = new Point(3, 3);
             btnMidiOutConnect.Name = "btnMidiOutConnect";
-            btnMidiOutConnect.Size = new Size(75, 23);
+            btnMidiOutConnect.Size = new Size(75, 42);
             btnMidiOutConnect.TabIndex = 2;
             btnMidiOutConnect.Text = "&Connect";
             btnMidiOutConnect.UseVisualStyleBackColor = true;
@@ -230,7 +230,7 @@
             // 
             btnMidiRefresh.Location = new Point(84, 3);
             btnMidiRefresh.Name = "btnMidiRefresh";
-            btnMidiRefresh.Size = new Size(75, 23);
+            btnMidiRefresh.Size = new Size(75, 40);
             btnMidiRefresh.TabIndex = 3;
             btnMidiRefresh.Text = "&Refresh";
             btnMidiRefresh.UseVisualStyleBackColor = true;
@@ -240,7 +240,7 @@
             // 
             btnMidiTest.Location = new Point(165, 3);
             btnMidiTest.Name = "btnMidiTest";
-            btnMidiTest.Size = new Size(116, 23);
+            btnMidiTest.Size = new Size(116, 40);
             btnMidiTest.TabIndex = 4;
             btnMidiTest.Text = "&Test (Note On)";
             btnMidiTest.UseVisualStyleBackColor = true;
@@ -258,7 +258,7 @@
             // 
             btnStop.Location = new Point(393, 3);
             btnStop.Name = "btnStop";
-            btnStop.Size = new Size(75, 23);
+            btnStop.Size = new Size(75, 40);
             btnStop.TabIndex = 6;
             btnStop.Text = "Note Off";
             btnStop.UseVisualStyleBackColor = true;
@@ -313,16 +313,16 @@
             flowSerialButtons.Controls.Add(btnSerialRefresh);
             flowSerialButtons.Controls.Add(btnSerialDisconnect);
             flowSerialButtons.Dock = DockStyle.Bottom;
-            flowSerialButtons.Location = new Point(3, 549);
+            flowSerialButtons.Location = new Point(3, 528);
             flowSerialButtons.Name = "flowSerialButtons";
-            flowSerialButtons.Size = new Size(780, 31);
+            flowSerialButtons.Size = new Size(780, 52);
             flowSerialButtons.TabIndex = 1;
             // 
             // btnSerialConnect
             // 
             btnSerialConnect.Location = new Point(3, 3);
             btnSerialConnect.Name = "btnSerialConnect";
-            btnSerialConnect.Size = new Size(75, 23);
+            btnSerialConnect.Size = new Size(116, 38);
             btnSerialConnect.TabIndex = 2;
             btnSerialConnect.Text = "C&onnect";
             btnSerialConnect.UseVisualStyleBackColor = true;
@@ -330,9 +330,9 @@
             // 
             // btnSerialRefresh
             // 
-            btnSerialRefresh.Location = new Point(84, 3);
+            btnSerialRefresh.Location = new Point(125, 3);
             btnSerialRefresh.Name = "btnSerialRefresh";
-            btnSerialRefresh.Size = new Size(75, 23);
+            btnSerialRefresh.Size = new Size(108, 38);
             btnSerialRefresh.TabIndex = 3;
             btnSerialRefresh.Text = "&Refresh";
             btnSerialRefresh.UseVisualStyleBackColor = true;
@@ -340,9 +340,9 @@
             // 
             // btnSerialDisconnect
             // 
-            btnSerialDisconnect.Location = new Point(165, 3);
+            btnSerialDisconnect.Location = new Point(239, 3);
             btnSerialDisconnect.Name = "btnSerialDisconnect";
-            btnSerialDisconnect.Size = new Size(75, 23);
+            btnSerialDisconnect.Size = new Size(124, 38);
             btnSerialDisconnect.TabIndex = 4;
             btnSerialDisconnect.Text = "&Disconnect";
             btnSerialDisconnect.UseVisualStyleBackColor = true;
@@ -363,7 +363,7 @@
             tabLog.Location = new Point(4, 24);
             tabLog.Name = "tabLog";
             tabLog.Padding = new Padding(3);
-            tabLog.Size = new Size(792, 589);
+            tabLog.Size = new Size(792, 660);
             tabLog.TabIndex = 2;
             tabLog.Text = "Messages";
             tabLog.UseVisualStyleBackColor = true;
@@ -382,8 +382,8 @@
             // splitContainer2.Panel2
             // 
             splitContainer2.Panel2.Controls.Add(flowLayoutPanel2);
-            splitContainer2.Size = new Size(786, 583);
-            splitContainer2.SplitterDistance = 537;
+            splitContainer2.Size = new Size(786, 654);
+            splitContainer2.SplitterDistance = 602;
             splitContainer2.TabIndex = 1;
             // 
             // groupBox1
@@ -392,7 +392,7 @@
             groupBox1.Dock = DockStyle.Fill;
             groupBox1.Location = new Point(0, 0);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(786, 537);
+            groupBox1.Size = new Size(786, 602);
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
             groupBox1.Text = "Log:";
@@ -404,7 +404,7 @@
             lstLog.ItemHeight = 15;
             lstLog.Location = new Point(3, 19);
             lstLog.Name = "lstLog";
-            lstLog.Size = new Size(780, 515);
+            lstLog.Size = new Size(780, 580);
             lstLog.TabIndex = 1;
             // 
             // flowLayoutPanel2
@@ -415,14 +415,14 @@
             flowLayoutPanel2.Dock = DockStyle.Fill;
             flowLayoutPanel2.Location = new Point(0, 0);
             flowLayoutPanel2.Name = "flowLayoutPanel2";
-            flowLayoutPanel2.Size = new Size(786, 42);
+            flowLayoutPanel2.Size = new Size(786, 48);
             flowLayoutPanel2.TabIndex = 0;
             // 
             // btnClear
             // 
             btnClear.Location = new Point(3, 3);
             btnClear.Name = "btnClear";
-            btnClear.Size = new Size(75, 23);
+            btnClear.Size = new Size(84, 46);
             btnClear.TabIndex = 0;
             btnClear.Text = "&Clear";
             btnClear.UseVisualStyleBackColor = true;
@@ -430,9 +430,9 @@
             // 
             // btnLargerText
             // 
-            btnLargerText.Location = new Point(84, 3);
+            btnLargerText.Location = new Point(93, 3);
             btnLargerText.Name = "btnLargerText";
-            btnLargerText.Size = new Size(75, 23);
+            btnLargerText.Size = new Size(65, 46);
             btnLargerText.TabIndex = 1;
             btnLargerText.Text = "+";
             btnLargerText.UseVisualStyleBackColor = true;
@@ -440,9 +440,9 @@
             // 
             // btnSmallerText
             // 
-            btnSmallerText.Location = new Point(165, 3);
+            btnSmallerText.Location = new Point(164, 3);
             btnSmallerText.Name = "btnSmallerText";
-            btnSmallerText.Size = new Size(75, 23);
+            btnSmallerText.Size = new Size(64, 46);
             btnSmallerText.TabIndex = 2;
             btnSmallerText.Text = "-";
             btnSmallerText.UseVisualStyleBackColor = true;
@@ -579,7 +579,7 @@
             // 
             btnTest.Location = new Point(527, 3);
             btnTest.Name = "btnTest";
-            btnTest.Size = new Size(75, 23);
+            btnTest.Size = new Size(95, 47);
             btnTest.TabIndex = 1;
             btnTest.Text = "&Test";
             btnTest.UseVisualStyleBackColor = true;
@@ -609,7 +609,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 641);
+            ClientSize = new Size(800, 712);
             Controls.Add(tabControls);
             Controls.Add(menu);
             MainMenuStrip = menu;
