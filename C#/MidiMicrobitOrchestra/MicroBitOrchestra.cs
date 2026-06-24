@@ -1,6 +1,7 @@
 using NAudio.Midi;
 using System.IO.Ports;
 using System.Text.RegularExpressions;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MidiMicrobitOrchestra
 {
@@ -96,6 +97,7 @@ namespace MidiMicrobitOrchestra
         {
             UpdateSerialPortNames();
             UpdateMidiOutDevices();
+            comboChannel.SelectedIndex = 0;
         }
 
         SerialPort port;
@@ -119,6 +121,47 @@ namespace MidiMicrobitOrchestra
             port.Open();
         }
 
+        void ProcessMessage(string msg)
+        {
+            // check the message against the firewall rules
+            if (!firewall.IsAllowed(msg))
+            {
+                Invoke(() =>
+                {
+                    lblRules.Text = $"Message '{msg}' is blocked by firewall";
+                });
+                return;
+            }
+
+            // this event handler will run in a different thread from the main program thread so Invoke is required before interacting with the UI
+            lstLog.Invoke(() =>
+            {
+                // display the message on the log list
+                lstLog.Items.Add(msg);
+                lstLog.SelectedIndex = lstLog.Items.Count - 1;
+            });
+
+            // use a regular expression to detect an integer in the received message data
+            Match m = Regex.Match(msg, "(\\d+)");
+            if (m.Success)
+            {
+                // extract the MIDI note number from the received data
+                int note = int.Parse(m.Groups[1].Value);
+
+                lstLog.Invoke(() =>
+                {
+                    lstLog.Items.Add($"Note On: {note}");
+                });
+
+                // if we're connected to a MIDI output device then trigger a NoteOn message
+                if (midiOut != null)
+                {
+                    // See https://mayerwin.github.io/MIDI-Notes-Player/ for an interactive description of MIDI note numbers
+                    midiOut.Send(new NoteOnEvent(0, 1, note, 127, 200).GetAsShortMessage());
+                }
+            }
+        }
+
         /// <summary>
         /// Serial port event handler: data has been received.
         /// This will happen whenver the micropython program on the microbit tries to print something:
@@ -135,33 +178,8 @@ namespace MidiMicrobitOrchestra
                 // read the data from the REPL
                 string data = port.ReadLine();
 
-                // this event handler will run in a different thread from the main program thread so Invoke is required before interacting with the UI
-                lstLog.Invoke(() =>
-                {
-                    // display the message on the log list
-                    lstLog.Items.Add(data);
-                    lstLog.SelectedIndex = lstLog.Items.Count - 1;
-                });
+                ProcessMessage(data);
 
-                // use a regular expression to detect an integer in the received message data
-                Match m = Regex.Match(data, "(\\d+)");
-                if (m.Success)
-                {
-                    // extract the MIDI note number from the received data
-                    int note = int.Parse(m.Groups[1].Value);
-
-                    lstLog.Invoke(() =>
-                    {
-                        lstLog.Items.Add($"Note On: {note}");
-                    });
-
-                    // if we're connected to a MIDI output device then trigger a NoteOn message
-                    if (midiOut != null)
-                    {
-                        // See https://mayerwin.github.io/MIDI-Notes-Player/ for an interactive description of MIDI note numbers
-                        midiOut.Send(new NoteOnEvent(0, 1, note, 127, 200).GetAsShortMessage());
-                    }
-                }
             }
             /// ... so be prepared for errors and log them gracefully
             catch (Exception ex)
@@ -272,9 +290,9 @@ namespace MidiMicrobitOrchestra
             }
 
             string test = txtTestMessage.Text;
-            
-            lblRules.Text = $"{firewall.rules.Count} rules loaded: Test '{test}'" + 
-                (firewall.IsAllowed(test)? "allowed":"blocked");
+
+            lblRules.Text = $"{firewall.rules.Count} rules loaded: Test '{test}'" +
+                (firewall.IsAllowed(test) ? "allowed" : "blocked");
         }
 
         /// <summary>
@@ -311,13 +329,74 @@ namespace MidiMicrobitOrchestra
         {
             if (firewall.IsAllowed(txtTestMessage.Text))
             {
-                lstLog.Items.Add($"Message '{txtTestMessage.Text}' is allowed");
-
+                lblRules.Text = $"Message '{txtTestMessage.Text}' is allowed";
+                ProcessMessage(txtTestMessage.Text);
             }
             else
             {
-                lstLog.Items.Add($"Message '{txtTestMessage.Text}' is blocked");
+                lblRules.Text = $"Message '{txtTestMessage.Text}' is blocked";
             }
+
+        }
+
+        /// <summary>
+        /// Button click event handler: clear the log list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            lstLog.Items.Clear();
+        }
+
+        /// <summary>
+        /// Stores the current size of all text on the form
+        /// </summary>
+        int textSize = 10;
+
+        /// <summary>
+        /// Recursively changes the text size of every control on the form
+        /// </summary>
+        /// <param name="newSize">New font size</param>
+        void SetTextSize(int newSize)
+        {
+            textSize = newSize;
+            SetTextSizeRecursive(this, newSize);
+        }
+
+        /// <summary>
+        /// Sets the font size recursively for a control and all its child controls
+        /// </summary>
+        /// <param name="c">The control to update</param>
+        /// <param name="newSize">The new font size</param>
+        private void SetTextSizeRecursive(Control c, int newSize)
+        {
+            Font f = new Font(FontFamily.GenericSansSerif, newSize);
+            c.Font = f;
+            foreach(Control child in c.Controls)
+            {
+                SetTextSizeRecursive(child, newSize);
+            }
+        }
+
+        /// <summary>
+        /// Button click event handler: increase the text size of all controls on the form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnLargerText_Click(object sender, EventArgs e)
+        {
+            SetTextSize(textSize + 1);
+        }
+
+        /// <summary>
+        /// Button click event handler: decrease the text size of all controls on the form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSmallerText_Click(object sender, EventArgs e)
+        {
+            SetTextSize(textSize - 1);
         }
     }
 }
