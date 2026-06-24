@@ -28,17 +28,25 @@ namespace MidiMicrobitOrchestra
             Match m = constructor.Match(fromString);
             if(m.Success) {
                 pattern = m.Groups[2].Value.Trim();
-                switch(m.Groups[1].Value.ToLower())
+                try
                 {
-                    case "allow":
-                    case "+":
-                        ruleType = RuleType.Allow;
-                        break;
-                    case "block":
-                    case "-":
-                        ruleType = RuleType.Block;
-                        break;
+                    Regex checkValid = new Regex(pattern);
+                    switch (m.Groups[1].Value.ToLower())
+                    {
+                        case "allow":
+                        case "+":
+                            ruleType = RuleType.Allow;
+                            break;
+                        case "block":
+                        case "-":
+                            ruleType = RuleType.Block;
+                            break;
+                    }
+                } catch(RegexParseException e)
+                {
+                    ruleType = RuleType.Invalid;
                 }
+                
 
             }
         }

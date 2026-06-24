@@ -185,7 +185,7 @@
             tabMidiOutputDevices.Location = new Point(4, 24);
             tabMidiOutputDevices.Name = "tabMidiOutputDevices";
             tabMidiOutputDevices.Padding = new Padding(3);
-            tabMidiOutputDevices.Size = new Size(792, 589);
+            tabMidiOutputDevices.Size = new Size(792, 660);
             tabMidiOutputDevices.TabIndex = 0;
             tabMidiOutputDevices.Text = "MIDI Settings";
             tabMidiOutputDevices.UseVisualStyleBackColor = true;
@@ -197,7 +197,7 @@
             grpMidiOutput.Dock = DockStyle.Fill;
             grpMidiOutput.Location = new Point(3, 3);
             grpMidiOutput.Name = "grpMidiOutput";
-            grpMidiOutput.Size = new Size(786, 583);
+            grpMidiOutput.Size = new Size(786, 654);
             grpMidiOutput.TabIndex = 1;
             grpMidiOutput.TabStop = false;
             grpMidiOutput.Text = "Midi Output Device:";
@@ -211,7 +211,7 @@
             flowMidiOutputButtons.Controls.Add(btnStop);
             flowMidiOutputButtons.Controls.Add(comboChannel);
             flowMidiOutputButtons.Dock = DockStyle.Bottom;
-            flowMidiOutputButtons.Location = new Point(3, 522);
+            flowMidiOutputButtons.Location = new Point(3, 593);
             flowMidiOutputButtons.Name = "flowMidiOutputButtons";
             flowMidiOutputButtons.Size = new Size(780, 58);
             flowMidiOutputButtons.TabIndex = 1;
@@ -281,7 +281,7 @@
             lstMidiOutputDevices.ItemHeight = 15;
             lstMidiOutputDevices.Location = new Point(3, 19);
             lstMidiOutputDevices.Name = "lstMidiOutputDevices";
-            lstMidiOutputDevices.Size = new Size(780, 561);
+            lstMidiOutputDevices.Size = new Size(780, 632);
             lstMidiOutputDevices.TabIndex = 0;
             // 
             // tabSerialPort
@@ -290,7 +290,7 @@
             tabSerialPort.Location = new Point(4, 24);
             tabSerialPort.Name = "tabSerialPort";
             tabSerialPort.Padding = new Padding(3);
-            tabSerialPort.Size = new Size(792, 589);
+            tabSerialPort.Size = new Size(792, 660);
             tabSerialPort.TabIndex = 1;
             tabSerialPort.Text = "Micro:bit Settings";
             tabSerialPort.UseVisualStyleBackColor = true;
@@ -302,7 +302,7 @@
             grpSerialPorts.Dock = DockStyle.Fill;
             grpSerialPorts.Location = new Point(3, 3);
             grpSerialPorts.Name = "grpSerialPorts";
-            grpSerialPorts.Size = new Size(786, 583);
+            grpSerialPorts.Size = new Size(786, 654);
             grpSerialPorts.TabIndex = 2;
             grpSerialPorts.TabStop = false;
             grpSerialPorts.Text = "Serial Ports:";
@@ -313,7 +313,7 @@
             flowSerialButtons.Controls.Add(btnSerialRefresh);
             flowSerialButtons.Controls.Add(btnSerialDisconnect);
             flowSerialButtons.Dock = DockStyle.Bottom;
-            flowSerialButtons.Location = new Point(3, 528);
+            flowSerialButtons.Location = new Point(3, 599);
             flowSerialButtons.Name = "flowSerialButtons";
             flowSerialButtons.Size = new Size(780, 52);
             flowSerialButtons.TabIndex = 1;
@@ -354,7 +354,7 @@
             lstSerialPorts.ItemHeight = 15;
             lstSerialPorts.Location = new Point(3, 19);
             lstSerialPorts.Name = "lstSerialPorts";
-            lstSerialPorts.Size = new Size(780, 561);
+            lstSerialPorts.Size = new Size(780, 632);
             lstSerialPorts.TabIndex = 0;
             // 
             // tabLog
@@ -455,7 +455,7 @@
             tabFilter.Location = new Point(4, 24);
             tabFilter.Name = "tabFilter";
             tabFilter.Padding = new Padding(3);
-            tabFilter.Size = new Size(792, 589);
+            tabFilter.Size = new Size(792, 660);
             tabFilter.TabIndex = 3;
             tabFilter.Text = "Rules";
             tabFilter.UseVisualStyleBackColor = true;
@@ -474,8 +474,8 @@
             // splitContainer3.Panel2
             // 
             splitContainer3.Panel2.Controls.Add(groupBox2);
-            splitContainer3.Size = new Size(786, 561);
-            splitContainer3.SplitterDistance = 449;
+            splitContainer3.Size = new Size(786, 632);
+            splitContainer3.SplitterDistance = 505;
             splitContainer3.TabIndex = 2;
             // 
             // splitContainer1
@@ -491,7 +491,7 @@
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(groupBox4);
-            splitContainer1.Size = new Size(786, 449);
+            splitContainer1.Size = new Size(786, 505);
             splitContainer1.SplitterDistance = 383;
             splitContainer1.TabIndex = 1;
             // 
@@ -501,7 +501,7 @@
             groupBox3.Dock = DockStyle.Fill;
             groupBox3.Location = new Point(0, 0);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(383, 449);
+            groupBox3.Size = new Size(383, 505);
             groupBox3.TabIndex = 1;
             groupBox3.TabStop = false;
             groupBox3.Text = "Rule Editor";
@@ -512,7 +512,7 @@
             txtRuleEditor.Location = new Point(3, 19);
             txtRuleEditor.Multiline = true;
             txtRuleEditor.Name = "txtRuleEditor";
-            txtRuleEditor.Size = new Size(377, 427);
+            txtRuleEditor.Size = new Size(377, 483);
             txtRuleEditor.TabIndex = 0;
             txtRuleEditor.TextChanged += txtRuleEditor_TextChanged;
             // 
@@ -522,7 +522,7 @@
             groupBox4.Dock = DockStyle.Fill;
             groupBox4.Location = new Point(0, 0);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(399, 449);
+            groupBox4.Size = new Size(399, 505);
             groupBox4.TabIndex = 1;
             groupBox4.TabStop = false;
             groupBox4.Text = "Valid rules:";
@@ -534,7 +534,7 @@
             lstRules.ItemHeight = 15;
             lstRules.Location = new Point(3, 19);
             lstRules.Name = "lstRules";
-            lstRules.Size = new Size(393, 427);
+            lstRules.Size = new Size(393, 483);
             lstRules.TabIndex = 0;
             // 
             // groupBox2
@@ -543,7 +543,7 @@
             groupBox2.Dock = DockStyle.Fill;
             groupBox2.Location = new Point(0, 0);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(786, 108);
+            groupBox2.Size = new Size(786, 123);
             groupBox2.TabIndex = 1;
             groupBox2.TabStop = false;
             groupBox2.Text = "Test:";
@@ -556,7 +556,7 @@
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(3, 19);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(780, 86);
+            flowLayoutPanel1.Size = new Size(780, 101);
             flowLayoutPanel1.TabIndex = 2;
             // 
             // label1
@@ -574,6 +574,7 @@
             txtTestMessage.Name = "txtTestMessage";
             txtTestMessage.Size = new Size(456, 23);
             txtTestMessage.TabIndex = 0;
+            txtTestMessage.TextChanged += txtTestMessage_TextChanged;
             // 
             // btnTest
             // 
@@ -588,7 +589,7 @@
             // statusStrip1
             // 
             statusStrip1.Items.AddRange(new ToolStripItem[] { lblRules });
-            statusStrip1.Location = new Point(3, 564);
+            statusStrip1.Location = new Point(3, 635);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(786, 22);
             statusStrip1.TabIndex = 0;

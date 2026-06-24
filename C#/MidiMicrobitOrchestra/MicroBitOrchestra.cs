@@ -319,7 +319,7 @@ namespace MidiMicrobitOrchestra
             string test = txtTestMessage.Text;
 
             lblRules.Text = $"{firewall.rules.Count} rules loaded: Test '{test}'" +
-                (firewall.IsAllowed(test) ? "allowed" : "blocked");
+                (firewall.IsAllowed(test) ? " allowed" : " blocked");
         }
 
         /// <summary>
@@ -400,7 +400,7 @@ namespace MidiMicrobitOrchestra
         {
             Font f = new Font(FontFamily.GenericSansSerif, newSize);
             c.Font = f;
-            foreach(Control child in c.Controls)
+            foreach (Control child in c.Controls)
             {
                 SetTextSizeRecursive(child, newSize);
             }
@@ -424,6 +424,19 @@ namespace MidiMicrobitOrchestra
         private void btnSmallerText_Click(object sender, EventArgs e)
         {
             SetTextSize(textSize - 1);
+        }
+
+        /// <summary>
+        /// Text changed event handler: update the rules after a short delay to avoid updating on every keystroke
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtTestMessage_TextChanged(object sender, EventArgs e)
+        {
+            lblRules.Text = "Waiting...";
+            ruleUpdateTimer.Enabled = false;
+            ruleUpdateTimer.Enabled = true;
+            ruleUpdateTimer.Start();
         }
     }
 }
